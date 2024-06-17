@@ -2,9 +2,12 @@
 	"name": "solidity-visual-auditor",
 	"displayName": "Solidity Visual Developer",
 	"description": "Ethereum Solidity Language customized for developers and auditors using Visual Studio Code",
-	"version": "0.2.1",
+	"version": "0.2.3",
 	"publisher": "me",
-	"repository": "https://github.com/C0D3O/vscode-solidity-auditor",
+	"icon": "images/icon.png",
+	"engines": {
+		"vscode": "^1.26.2"
+	},
 	"activationEvents": [
 		"onLanguage:solidity"
 	],
@@ -14,6 +17,11 @@
 			"type": "object",
 			"title": "Solidity Visual Developer configuration",
 			"properties": {
+				"solidity-va.hover": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to enable/disable Solidity hover."
+				},
 				"solidity-va.deco.statevars": {
 					"type": "boolean",
 					"default": true,
@@ -58,28 +66,197 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Whether to enable/disable Function Mutability/Accessibility decoration in the outline view"
+				},
+				"solidity-va.outline.inheritance.show": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to show/hide inherited names in the outline view"
+				},
+				"solidity-va.outline.extras": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to show/hide extras (complexity, state var access) for functions in the outline view"
+				},
+				"solidity-va.outline.var.storage_annotations": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to show/hide storage annotations for variables in the outline view"
+				},
+				"solidity-va.outline.pragmas.show": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to show/hide pragmas in the outline view"
+				},
+				"solidity-va.outline.imports.show": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to show/hide imports in the outline view"
+				},
+				"solidity-va.overviewruler.decorations.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable decorations in the overview ruler (requires reload)"
+				},
+				"solidity-va.parser.parseImports": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to recursively parse imports or not"
+				},
+				"solidity-va.diagnostics.cdili_json.import": {
+					"type": "boolean",
+					"default": false,
+					"description": "Recursively search for CDILI format *-issues.json from external scanners and visualize findings as diagnostics in vscode"
+				},
+				"solidity-va.tools.surya.input.contracts": {
+					"type": "string",
+					"enum": [
+						"cached",
+						"workspace"
+					],
+					"default": "cached",
+					"description": "Define whether surya should take cached files or all contracts in the workspace as input"
+				},
+				"solidity-va.tools.surya.option.negModifiers": {
+					"type": "boolean",
+					"default": false,
+					"description": "Surya.mdreport: Also list modifiers that are not present ( ~~strikedthrough~~). This may help catch issues relating to missing modifiers."
+				},
+				"solidity-va.preview.dot": {
+					"type": "boolean",
+					"default": true,
+					"description": "Open dot output in graphviz rendered form (relies on a graphviz preview extension to be installed)"
+				},
+				"solidity-va.preview.markdown": {
+					"type": "boolean",
+					"default": false,
+					"description": "Open markdown output in rendered form (relies on a markdown preview extension to be installed)"
+				},
+				"solidity-va.codelens.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable all codelenses - inline action (master switch)"
+				},
+				"solidity-va.codelens.report.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'report'"
+				},
+				"solidity-va.codelens.graph.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'graph'"
+				},
+				"solidity-va.codelens.graphThis.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'graphThis'"
+				},
+				"solidity-va.codelens.inheritance.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'inheritance'"
+				},
+				"solidity-va.codelens.parse.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'parse'"
+				},
+				"solidity-va.codelens.flatten.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'report'"
+				},
+				"solidity-va.codelens.funcSigs.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'funcSigs'"
+				},
+				"solidity-va.codelens.uml.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'uml'"
+				},
+				"solidity-va.codelens.unittestStub.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'UnitTest Stub'"
+				},
+				"solidity-va.codelens.dependencies.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'report'"
+				},
+				"solidity-va.codelens.ftrace.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'ftrace'"
+				},
+				"solidity-va.codelens.drawio.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable codelens 'draw.io' uml export"
+				},
+				"solidity-va.findAllReferences.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable right-click -> Find All References. Note: This allows you to disable the built-in reference provider in favor of one of another extension. Takes effect after restart."
+				},
+				"solidity-va.mode.active": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable/Disable all active components of this extension (emergency)."
+				},
+				"solidity-va.uml.options": {
+					"type": "text",
+					"default": "",
+					"description": "Add custom uml options"
+				},
+				"solidity-va.uml.actors.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "Enable/Disable actors in uml"
+				},
+				"solidity-va.cockpit.view.topLevelContracts.listStyle": {
+					"type": "string",
+					"enum": [
+						"flat",
+						"tree"
+					],
+					"default": "flat",
+					"description": "Select TopLevelContracts view list style."
+				},
+				"solidity-va.whatsNew.disabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "Enable/Disable update notifications"
+				},
+				"solidity-va.test.defaultUnittestTemplate": {
+					"type": "string",
+					"enum": [
+						"hardhat",
+						"truffle"
+					],
+					"default": "truffle",
+					"description": "Select which default template to use when creating a unitTest stub (e.g. truffle, hardhat)"
+				},
+				"solidity-va.debug.parser.showExceptions": {
+					"type": "boolean",
+					"default": false,
+					"description": "Enable/Disable printing parser error / stacktraces to console log (noisy)"
+				},
+				"solidity-va.flatten.mode": {
+					"type": "string",
+					"enum": [
+						"internal (lexical)",
+						"truffle"
+					],
+					"default": "default",
+					"description": "Select which flattener to use (e.g. default=lexical flattener, truffle=truffle-flattener)"
 				}
 			}
 		}
 	},
-	"extensionDependencies": [
-		"tintinweb.vscode-solidity-language",
-		"tintinweb.graphviz-interactive-preview"
-	],
-	"extensionPack": [
-		"tintinweb.vscode-solidity-flattener",
-		"jebbs.plantuml",
-		"tintinweb.vscode-inline-bookmarks",
-		"tintinweb.vscode-ethover"
-	],
-	"scripts": {
-		"format": "prettier --write ."
-	},
 	"dependencies": {
-		"solidity-workspace": "^0.2.1",
-		"surya": "^0.4.6"
-	},
-	"devDependencies": {
-		"prettier": "^3.0.3"
+		"solidity-workspace": "^0.2.1"
 	}
 }
