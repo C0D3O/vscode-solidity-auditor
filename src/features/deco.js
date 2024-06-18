@@ -411,8 +411,7 @@ function init(context) {
 
 		styles[`styleArgument${idx}`] = vscode.window.createTextEditorDecorationType({
 			wholeLine: false,
-			light: { backgroundColor: lightBackground },
-			dark: { backgroundColor: darkBackground },
+
 			after: {
 				contentText: decoSuffix,
 				fontStyle: 'normal',
@@ -429,14 +428,6 @@ function init(context) {
 	const createBookmarkDecorationType = (gutterIconPath) => {
 		return vscode.window.createTextEditorDecorationType({
 			gutterIconPath,
-
-			light: {
-				fontWeight: 'bold',
-			},
-
-			dark: {
-				color: 'Chocolate',
-			},
 		});
 	};
 
@@ -446,37 +437,39 @@ function init(context) {
 	styles.decoStyleBookmarkIssue = createBookmarkDecorationType(gutterIcons.issue);
 
 	const createDecorationType = (options) => {
-		const { isWholeLine, borderColor, borderStyle, borderRadius, backgroundColor, gutterIconPath } = options;
+		const { isWholeLine, color, border, borderWidth, borderColor, borderStyle, borderRadius, backgroundColor, gutterIconPath } = options;
 
 		return vscode.window.createTextEditorDecorationType({
 			isWholeLine,
-			borderWidth: '2px',
-			borderRadius: borderRadius || '',
+
+			overviewRulerColor: settings.extensionConfig().overviewruler.decorations.enable ? borderColor || 'blue' : '',
+			overviewRulerLane: settings.extensionConfig().overviewruler.decorations.enable ? vscode.OverviewRulerLane.Right : '',
+
+			// borderColor: borderColor || 'GoldenRod',
+			backgroundColor,
+			color: color || '',
+			border: border || 'none',
+			borderWidth: borderWidth || '0',
+			borderRadius: borderRadius || '0',
 			borderStyle: borderStyle || 'solid',
-			overviewRulerColor: settings.extensionConfig().overviewruler.decorations.enable ? borderColor || 'blue' : undefined,
-			overviewRulerLane: settings.extensionConfig().overviewruler.decorations.enable ? vscode.OverviewRulerLane.Right : undefined,
-			light: {
-				borderColor: borderColor || 'DarkGoldenRod',
-				backgroundColor,
-			},
-			dark: {
-				borderColor: borderColor || 'GoldenRod',
-				backgroundColor,
-			},
+			borderColor: borderColor || undefined,
 			gutterIconPath,
 		});
 	};
 
 	styles.decoStyleRedLine = createDecorationType({
 		isWholeLine: true,
-		backgroundColor: { light: '#E8625250', dark: '#E9190F50' },
 	});
 	styles.decoStyleStateVar = createDecorationType({
-		borderColor: 'DarkGoldenRod',
+		color: '#eaa25e',
+		// borderWidth: '1.5px',
+		// borderColor: 'DarkGoldenRod',
 	});
 	styles.decoStyleStateVarImmutable = createDecorationType({
-		borderColor: 'DarkGoldenRod',
+		borderColor: '#eaa25e',
 		borderRadius: '10px',
+		borderWidth: '1.5px',
+		color: '#eaa25e',
 	});
 	styles.decoStyleLightGreen = createDecorationType({
 		borderColor: 'darkgreen',

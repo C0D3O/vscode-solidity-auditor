@@ -2,7 +2,8 @@
 	"name": "solidity-visual-auditor",
 	"displayName": "Solidity Visual Developer",
 	"description": "Ethereum Solidity Language customized for developers and auditors using Visual Studio Code",
-	"version": "0.2.3",
+	"version": "0.2.6",
+	"repository": "https://github.com/C0D3O/vscode-solidity-auditor",
 	"publisher": "me",
 	"icon": "images/icon.png",
 	"engines": {

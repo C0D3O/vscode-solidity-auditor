@@ -10,7 +10,8 @@ pragma solidity 1;
 /// @title this is some title
 
 contract SimpleDAO {
-    mapping (address => uint) private credit;
+    uint immutable xdsgsephmshopehsepohsh;
+    mapping immutable (address => uint) private credit;
 
     /// @param to dont know
     function donate(address to) payable public{
